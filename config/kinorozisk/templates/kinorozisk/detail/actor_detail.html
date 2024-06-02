@@ -1,0 +1,13 @@
+{% extends 'core/base.html' %}
+{% block title %}{{person.name}}{% endblock %}
+{% block content %}
+
+<div class='d-flex'>
+    <img src="{{person.photo.url}}" alt="{{person.name}}">
+    <div>
+        <h1>{{person.name}}</h1>
+        <p>{{person_detail.role_name}}</p>
+    </div>
+</div>
+
+{% endblock %}

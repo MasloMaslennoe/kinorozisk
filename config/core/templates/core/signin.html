@@ -1,0 +1,12 @@
+{% load static %}
+{% extends 'core/base.html' %}
+{% block title %}home{% endblock %}
+{% block content %}
+<form method='post'>
+    {% csrf_token %}
+    <input type="text" placeholder='Username' name='username' required>
+    <input type="text" placeholder='Password' name='password' required>
+    <input type="text" placeholder='Repeat password' name='repeat_password' required>
+    <button type="submit" class="btn btn-outline-warning">Подвердить</button>
+</form>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'core/base.html' %}
+{% block title %}{{title}}{% endblock %}
+{% block content %}
+<h1 class="text-center">{{title}}</h1>
+<div class="d-flex flex-wrap align-items-center justify-content-between container">
+    {% for person in persons %}
+    <a href="" class="text-decoration-none">
+    <div class="card m-3 bg-black" style="width: 15rem;">
+        <img src="{{person.photo.url}}" class="card-img-top" alt="{{person.title}}">
+            <div class="card-body d-flex flex-column">
+                <h3 class="card-title text-center">{{person.name}}</h3>
+        </div>
+    </div>
+    </a>
+    {% endfor %}
+</div>
+{% endblock %}

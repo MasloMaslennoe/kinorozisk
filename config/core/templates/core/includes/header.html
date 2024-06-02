@@ -1,0 +1,94 @@
+<header>
+    <nav class="navbar navbar-expand-lg bg-secondary-subtle">
+        <div class="container">
+          <a class="navbar-brand" href="#">КиноРозыск</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Главная</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'movies_list' %}">Фильмы</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'genres_list' %}">Жанры</a>
+              </li>
+              <li class="nav-item">
+                {% comment %} <a class="nav-link" href="{% url 'persons_list' person_role=persons.role %}">Актеры</a> {% endcomment %}
+              </li>
+              <li class="nav-item">
+                {% comment %} <a class="nav-link" href="{% url 'persons_list' %}">Режиссеры</a> {% endcomment %}
+              </li>
+            </ul>
+            <!-- <form class="d-flex" role="search">
+              <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-outline-success" type="submit">Search</button>
+            </form> -->
+            <ul class="list-unstyled d-flex gap-1 align-center">
+                {% if request.user.is_authenticated %}
+                    <li><a href="{% url 'profile' %}" class="btn btn-outline-warning">Личный кабинет</a></li>
+                    <li><a href="{% url 'signout' %}" class="btn btn-outline-warning">Выйти</a></li>
+                {% else %}
+                    <li>
+                      <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#signin">
+                        Войти
+                      </button>
+                    </li>
+                    <li>
+                      <button type="button" class="btn btn-outline-warning" data-bs-toggle="modal" data-bs-target="#signup">
+                        Зарегестрироваться
+                      </button>
+                    </li>
+                {% endif %}
+            </ul>
+          </div>
+        </div>
+      </nav>
+      
+      <div class="modal fade" id="signin" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form method='post' action='{% url 'signin' %}'>
+                {% csrf_token %}
+                <input type="text" placeholder='Username' name='username' required>
+                <input type="text" placeholder='Password' name='password' required>
+                <button type='submit'>Submit</button>
+              </form>
+            </div>
+            <div class="modal-footer">
+            </div>
+          </div>
+        </div>
+      </div> 
+
+
+      <div class="modal fade" id="signup" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body d-block">
+              <form method='post' action='{% url 'signup' %}'>
+                {% csrf_token %}
+                <input type="text" placeholder='Username' name='username' required>
+                <input type="text" placeholder='Password' name='password' required>
+                <input type="text" placeholder='Repeat password' name='repeat_password' required>
+                <button type="submit" class="btn btn-outline-warning">Подвердить</button>
+              </form>
+            </div>
+            <div class="modal-footer">
+            </div>
+          </div>
+        </div>
+      </div>
+</header>

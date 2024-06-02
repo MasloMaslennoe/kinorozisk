@@ -1,0 +1,46 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}{{person.name}}{% endblock %}
+{% block content %}
+<div class="container">
+    <div class='d-flex align-items-end'>
+        {% if user.avatar != Null %}
+        <img height='90vh' src="{{ user.avatar.url }}" alt="" class='rounded-5'>
+        {% endif %}
+        <h1 class>{{user.username}} </h1>
+    </div>
+    <div class='bg-black p-3 rounded-5 my-3'>
+    <h3>Любимые фильмы:</h3>
+    <div class="d-flex justify-content-center gap-3">
+        {% for movie in user.favorite_movies.all %}
+        <div class='' style='max-height: 50vh;'>
+            <a href="{% url 'movie_detail' movie_id=movie.id %}" class='text-decoration-none text-warning'>
+                <img height='80%' src="{{movie.poster.url}}" alt="">
+                <h2 style='max-width: 30vh;'>{{ movie.title }}</h2>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<div class="accordion" id="accordionExample">
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button bg-black" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          Изменить профиль
+        </button>
+      </h2>
+      <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+        <div class="accordion-body">
+          <form action="" method='post' class='d-flex flex-column gap-2'>
+            {% csrf_token %}
+            <input class='form-control' type="text" placeholder='Новое имя' name='first_name'>
+            <input class='form-control' type="text" placeholder='Новая Фамилия' name='last_name'>
+            <input class='form-control' type="text" placeholder='Новый e-mail' name='email'>
+            <button type='submit' class='btn btn-outline-warning d-block mx-auto'>Подвердить</button>
+          </form>
+        </div>
+      </div>
+    </div>
+</div>
+
+{% endblock %}

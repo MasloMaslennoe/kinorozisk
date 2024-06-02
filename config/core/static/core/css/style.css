@@ -1,0 +1,9 @@
+.movie__info-grid{
+    display: grid;
+    grid-template-columns: 3fr  1fr ;
+}
+
+.info-grid__item{
+    display: grid;
+    grid-template-columns: 1fr  2fr ;
+}

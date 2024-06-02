@@ -1,0 +1,94 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% block title %}{{person.name}}{% endblock %}
+{% block content %}
+
+
+<div class="container">
+    <section class='mt-5'>
+        <div class="d-flex justify-content-between gap-5    ">
+        <div>
+            <img src="{{movie.poster.url}}" alt="{{movie.title}} title" class='rounded-5'>
+            <div>
+                <p class="text-warning">{{movie.rating}}✮/10✮</p>
+            </div>
+        </div>
+        <div class="w=75">
+            <h1>{{movie.title}}</h1>
+            <p>{{ movie.description }}</p>
+            <div class='movie__info-grid'>
+                    <div class='info-grid__features'>
+                        <div class="info-grid__item">
+                            <h5 class="info-grid__title">Жанры:</h5>
+                            <div class='d-flex gap-1 flex-wrap'>
+                                {% for genre in movie.genres.all %}
+                                <a href class='info-grid__value'>{{ genre.name }}
+                                    {% if not forloop.last %},{% endif %}
+                                </a>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="info-grid__item">
+                            <h5 class="info-grid__title">Длительность:</h5>
+                            <p class='info-grid__value'>{{ movie.duration }}</p>
+                        </div>
+                        <div class="info-grid__item">
+                            <h5 class="info-grid__title">Бюджет:</h5>
+                            <p class='info-grid__value'>{{ movie.budget }}$</p>
+                        </div>
+                        <div class="info-grid__item">
+                            <h5 class="info-grid__title">Дата выхода:</h5>
+                            <p class='info-grid__value'>{{ movie.release_date }}</p>
+                        </div>
+                    </div>
+                    <div class='info-grid__movie-person'>
+                        <div class="info-grid__actors">
+                            <h4>Актеры:</h4>
+                            <ul class='list-unstyled'>
+                                {% for actor in movie.actors.all %}
+                                    <li>
+                                        <a href="">{{ actor.name }}</a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <div class="info-grid__directors">
+                            <h4>Режиссеры:</h4>
+                            <ul class='list-unstyled'>
+                                {% for director in movie.directors.all %}
+                                    <li>
+                                        <a href="">{{ director.name }}</a>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <iframe width="640" height="384" src="https://video.sibnet.ru/shell.php?videoid={{movie.player_id}}" frameborder="0" scrolling="no" allowfullscreen></iframe>
+        {% if movie.video_file.url != Null %}
+        <video src="{{movie.video_file.url}}" controls width='640'></video>
+        {% endif %}
+        {% comment %} {% if request.user.is_authenticated %} {% endcomment %}
+        <div class="">
+            <form action="{% url "add_movie_review" %}" method='post'>
+                {% csrf_token %}
+                <textarea name="review_text" cols="100" rows="5" type='text' placeholder='Место для вашего отзыва...'></textarea>
+                <button type='submit'>Отправить</button>
+                <input type="hidden" value='{{movie.id}}' name='movie_id'>
+            </form>
+        </div>
+        {% comment %} {% endif %} {% endcomment %}
+        <div>
+            {% for review in reviews %}
+                <h6>{{review.author}}</h6>
+                <p>{{review.text}}</p>
+                <span>{{review.created_at}}</span>
+            {% endfor %}
+        </div>
+        </div>
+</section>
+</div> 
+{% endblock %}
